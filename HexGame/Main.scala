@@ -2,13 +2,12 @@ package HexGame
 
 import scala.collection.SortedMap
 import Utils.{IO_Utils, MyRandom}
+import HexGame.Board.printBoard
 
 
 object Main extends App {
 
-  val board = new BoardState(5)
   val r = MyRandom(10)
-
 
   val options = SortedMap[Int, String](
     0 -> "Exit",
@@ -17,9 +16,10 @@ object Main extends App {
     3 -> "Continue saved game"
   )
 
-  mainLoop(board)
+  main()
 
-  def mainLoop(boardState: BoardState): Unit = {
-    IO_Utils.showPrompt(options)
+  def main(): Unit = {
+    val boardState = IO_Utils.showPrompt(options)
+    printBoard(boardState)
   }
 }

@@ -15,22 +15,6 @@ case class BoardState(board: Board, boardSize: Int){
   }
 }
 
-/*
-def emptyBoard(size: Int, count1: Int): Board = {
-    def emptyList(count2: Int): List[Cells.Cell] = {
-      if (count2 == 0)
-        Nil
-      else
-        Cells.Empty :: emptyList(count2 - 1)
-    }
-
-    if(count1 == 0)
-      Nil
-    else
-      emptyList(size) :: emptyBoard(size, count1 - 1)
-  }
- */
-
 object Board {
   type Board = List[List[Cells.Cell]]
   //type PlayerRandom = Player
@@ -77,23 +61,6 @@ object Board {
     }
   }
 
-  /*
-  def play(board: Board, player: Cells.Cell, row: Int, col: Int): Board = {
-    def aux(b: Board, r: Int, c: Int): Board = b match {
-      case Nil => Nil
-      case x :: xs => if (r != row) x :: aux(xs, r + 1, col) else aux2(x, c) :: xs
-    }
-
-    def aux2(l: List[Cells.Cell], c: Int): List[Cells.Cell] = l match {
-      case Nil => Nil
-      case y :: ys => if (c == col) player :: ys else y :: aux2(ys, c + 1)
-    }
-
-    aux(board, 0, 0)
-  }
-*/
-
-
   @tailrec
   def randomMove(board: Board, rand: RandomWithState): ((Int, Int), RandomWithState) = {
     val (row, firstRandom) = rand.nextInt(board.length)
@@ -104,13 +71,17 @@ object Board {
       randomMove(board, nextRandom)
   }
 
-  /** Função para representar o tabuleiro visualmente com slashes e backslashes
-   *
-   * @param board
+  /**
+   * Função para representar o tabuleiro visualmente com slashes e backslashes
    */
-  // Função para representar o tabuleiro visualmente com slashes e backslashes
-  def printBoard(board: Board, boardSize: Int): Unit = {
+  def printBoard(boardState: BoardState): Unit = {
+    val boardSize = boardState.boardSize
+    printBoardInner(boardState.board, boardSize)
+  }
 
+  def printBoardInner(board: Board, boardSize: Int): Unit = {
+
+    @tailrec
     def printBoardHeader(n: Int): Unit = {
       if (n <= 0) {
         return
@@ -122,6 +93,7 @@ object Board {
       printBoardHeader(n - 1)
     }
 
+    @tailrec
     def printBoardEdge(n: Int, boardRow: Int): Unit = {
       if (n <= 0) {
         return
@@ -134,6 +106,7 @@ object Board {
       printBoardEdge(n - 1, boardRow)
     }
 
+    @tailrec
     def printBoardLine(n: Int): Unit = {
       if (n <= 0) {
         return
@@ -147,6 +120,7 @@ object Board {
       }
     }
 
+    @tailrec
     def printRow(row: List[Cells.Cell], boardRow: Int): Unit = {
       if (row.nonEmpty) {
         val cellValue = row.head match {
@@ -189,7 +163,7 @@ object Board {
         println()
       }
 
-      printBoard(board.tail, boardSize)
+      printBoardInner(board.tail, boardSize)
     }
   }
 }
