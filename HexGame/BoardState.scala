@@ -5,7 +5,7 @@ import Utils.RandomWithState
 
 import scala.annotation.tailrec
 
-case class BoardState(board: Board, boardSize: Int){
+case class BoardState(board: Board, boardSize: Int) {
   def this(boardSize: Int) {
     this(List.fill(boardSize, boardSize)(Cells.Empty), boardSize);
   }
@@ -54,11 +54,38 @@ object Board {
     }
   }
 
-  def undo(board: Board, cell: (Int, Int)): Board = {
-    if (cell._1 < 0 || cell._1 >= getSize(board) || cell._2 < 0 || cell._2 >= getSize(board)) {
+  def undo(board: Board, cells: ((Int, Int),(Int, Int))): Board = {
+    if (cells == null) {
       board
     } else {
+      val firstUndoCell = cells._2
+      val secondUndoCell = cells._1
+      undoSinglePlay(undoSinglePlay(board,firstUndoCell), secondUndoCell)
+    }
+  }
+
+  def undoSinglePlay(board: Board, cell: (Int, Int)): Board = {
+    if (cell == null) {
+      board
+    } else if (cell._1 < 0 || cell._1 >= getSize(board) || cell._2 < 0 || cell._2 >= getSize(board)) {
+      board
+    }
+    else {
       board.updated(cell._1, board(cell._1).updated(cell._2, Cells.Empty))
+    }
+  }
+
+  def checkPosition(board: Board, position: (Int, Int)): Int = {
+    if (position == null ||
+      position._1 < 0 ||
+      position._1 >= getSize(board) ||
+      position._2 < 0 ||
+      position._2 >= getSize(board) ||
+      board(position._1)(position._2) != Cells.Empty) {
+      1
+    }
+    else {
+      0
     }
   }
 
