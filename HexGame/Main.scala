@@ -7,6 +7,7 @@ import scala.collection.SortedMap
 
 object Main extends App {
 
+  val board = BoardState(5)
   val size = Int
   val r = MyRandom(10)
   val cont = StartMenu("Name", Map())
@@ -17,7 +18,7 @@ object Main extends App {
     2 -> Utils.CommandLineOption("Pick board dimension", IO_Utils.printInstructions), // BoardGame.updateBoardDimension(IO_Utils.getUserInputIntIIIII("Dimension"))),
     3 -> Utils.CommandLineOption("Start new game", IO_Utils.printInstructions),
     4 -> Utils.CommandLineOption("Continue saved game", IO_Utils.printInstructions),
-    5 -> Utils.CommandLineOption("Print random position", IO_Utils.printInstructions), //, IO_Utils.printRandomPosition(board, r)),
+    5 -> Utils.CommandLineOption("Print board", StartMenu.printStartMenu), //, IO_Utils.printRandomPosition(board, r)),
     0 -> new CommandLineOption("Exit", _ => sys.exit)
   )
 

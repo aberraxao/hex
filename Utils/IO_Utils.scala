@@ -1,6 +1,6 @@
 package Utils
 
-import HexGame.BoardGame
+import HexGame.{Board, BoardState}
 
 import scala.annotation.tailrec
 import scala.collection.SortedMap
@@ -45,9 +45,16 @@ object IO_Utils {
       "\nexit: to save the game and exit")
     board
   }
+  /*
+  def printBoard(board: StartMenu): StartMenu = {
+    Board.printBoard(board)
+    board
+  }
 
   def printRandomPosition(board: StartMenu, r: MyRandom): StartMenu = {
     println(r)
     board
   }
+  */
+
 }
