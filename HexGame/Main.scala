@@ -6,7 +6,7 @@ import Utils.{IO_Utils, MyRandom}
 
 object Main extends App {
 
-  val board = BoardState(5)
+  val board = new BoardState(5)
   val r = MyRandom(10)
 
 
