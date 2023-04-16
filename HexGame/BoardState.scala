@@ -40,6 +40,7 @@ object Board {
     if (cell._1 < 0 || cell._1 >= getSize(board) || cell._2 < 0 || cell._2 >= getSize(board) || board(cell._1)(cell._2) != Cells.Empty) {
       board
     } else {
+      println("Player " + player + ": " + cell)
       board.updated(cell._1, board(cell._1).updated(cell._2, player))
     }
   }
