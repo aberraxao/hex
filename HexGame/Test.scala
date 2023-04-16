@@ -1,26 +1,30 @@
 package HexGame
 
-import HexGame.Board.{getSize, play, printBoard}
+import HexGame.Board.{Board, getSize, play, printBoard}
 
 object Test extends App {
 
-  val test = BoardState(5)
-  var testBoard = test.board
-  printBoard(testBoard, Board.getSize(testBoard))
+  val test = new BoardState(5)
+  printBoard(test.board, Board.getSize(test.board))
 
+  /*
   println("Player red: 1 1")
-  testBoard = play(testBoard, Cells.Red, 1, 1)
-  printBoard(testBoard, getSize(testBoard))
+  val newBoard = play(test.board, Cells.Red, 1, 1)
+  val newTest = new BoardState(newBoard)
+  printBoard(newTest.board, getSize(test.board))
+   */
 
   println("Player blue: 2 2")
-  testBoard = play(testBoard, Cells.Blue, 2, 2)
-  printBoard(testBoard, getSize(testBoard))
+  val newTest = new BoardState(play(test.board, Cells.Blue, 2, 2))
+  printBoard(newTest.board, getSize(test.board))
 
   println("Player red: 2 2")
-  testBoard = play(testBoard, Cells.Red, 2, 2)
-  printBoard(testBoard, getSize(testBoard))
+  val newTest2 = new BoardState(play(newTest.board, Cells.Red, 2, 1))
+  printBoard(newTest2.board, getSize(test.board))
 
+  /*
   println("Player red: 1 2")
-  testBoard = play(testBoard, Cells.Red, 1, 2)
-  printBoard(testBoard, getSize(testBoard))
+  test.board = play(test.board, Cells.Red, 1, 2)
+  printBoard(test.board, getSize(test.board))
+  */
 }
