@@ -1,5 +1,9 @@
 package HexGame
 
+import Utils.RandomWithState
+
+import scala.annotation.tailrec
+
 case class BoardState(boardSize: Int){
   val board: Board.Board = List.fill(boardSize, boardSize)(Cells.Empty)
 }
@@ -33,5 +37,16 @@ object Board {
       board.updated(row, board(row).updated(col, player))
     }
   }
+
+  @tailrec
+  def randomMove(board: Board, rand: RandomWithState): ((Int, Int), RandomWithState) = {
+    val (row, firstRandom) = rand.nextInt(board.length)
+    val (col, nextRandom) = firstRandom.nextInt(board.length)
+    if (board(row)(col) == Cells.Empty)
+      ((row, col), nextRandom)
+    else
+      randomMove(board, nextRandom)
+  }
+
 }
 
