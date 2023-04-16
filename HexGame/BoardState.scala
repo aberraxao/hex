@@ -7,7 +7,7 @@ import scala.annotation.tailrec
 
 case class BoardState(board: Board, boardSize: Int) {
   def this(boardSize: Int) {
-    this(List.fill(boardSize, boardSize)(Cells.Empty), boardSize);
+    this(List.fill(boardSize, boardSize)(Cells.Empty), boardSize)
   }
 
   def this(board: Board) {
@@ -54,13 +54,13 @@ object Board {
     }
   }
 
-  def undo(board: Board, cells: ((Int, Int),(Int, Int))): Board = {
+  def undo(board: Board, cells: ((Int, Int), (Int, Int))): Board = {
     if (cells == null) {
       board
     } else {
       val firstUndoCell = cells._2
       val secondUndoCell = cells._1
-      undoSinglePlay(undoSinglePlay(board,firstUndoCell), secondUndoCell)
+      undoSinglePlay(undoSinglePlay(board, firstUndoCell), secondUndoCell)
     }
   }
 
@@ -75,18 +75,29 @@ object Board {
     }
   }
 
-  def checkPosition(board: Board, position: (Int, Int)): Int = {
+  def isPositionInsideBoard(board: Board, position: (Int, Int)): Boolean = {
     if (position == null ||
       position._1 < 0 ||
       position._1 >= getSize(board) ||
       position._2 < 0 ||
-      position._2 >= getSize(board) ||
-      board(position._1)(position._2) != Cells.Empty) {
-      1
-    }
-    else {
-      0
-    }
+      position._2 >= getSize(board))
+      false
+    else
+      true
+  }
+
+  def isPositionEmpty(board: Board, position: (Int, Int)): Boolean = {
+    if (board(position._1)(position._2) == Cells.Empty)
+      true
+    else
+      false
+  }
+
+  def isValidPosition(board: Board, position: (Int, Int)): Boolean = {
+    if (isPositionInsideBoard(board, position) && isPositionEmpty(board, position))
+      true
+    else
+      false
   }
 
   @tailrec
@@ -111,39 +122,34 @@ object Board {
 
     @tailrec
     def printBoardHeader(n: Int): Unit = {
-      if (n <= 0) {
+      if (n <= 0)
         return
-      } else if (n == 1) {
+      else if (n == 1)
         print("\u001B[34m *\u001B[0m")
-      } else {
+      else
         print("\u001B[34m *  \u001B[0m")
-      }
+
       printBoardHeader(n - 1)
     }
 
     @tailrec
     def printBoardEdge(n: Int, boardRow: Int): Unit = {
-      if (n <= 0) {
-        return
-      } else if (boardRow % 2 == 0 && n == 2) {
-        print("\u001B[31m*\u001B[0m")
-      } else {
-        print(" ")
-      }
-
+      if (n > 0) {
+        if (boardRow % 2 == 0 && n == 2)
+          print("\u001B[31m*\u001B[0m")
+        else
+          print(" ")
       printBoardEdge(n - 1, boardRow)
+      }
     }
 
     @tailrec
     def printBoardLine(n: Int): Unit = {
-      if (n <= 0) {
-        return
-      } else {
-        if (n == 1) {
+      if (n > 0) {
+        if (n == 1)
           print("\\")
-        } else {
+        else
           print("\\ / ")
-        }
         printBoardLine(n - 1)
       }
     }
@@ -157,11 +163,10 @@ object Board {
           case Cells.Empty => "."
         }
 
-        if (row.tail.nonEmpty) {
+        if (row.tail.nonEmpty)
           print(cellValue + " - ")
-        } else {
+        else
           print(cellValue + "\u001B[31m *\u001B[0m")
-        }
 
         printRow(row.tail, boardRow)
       }

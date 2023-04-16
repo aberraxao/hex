@@ -1,9 +1,10 @@
 package HexGame
 
-import scala.collection.SortedMap
 import Utils.{IO_Utils, MyRandom, RandomWithState}
 import HexGame.Board.{play, printBoard, randomMove, undo}
 
+import scala.annotation.tailrec
+import scala.collection.SortedMap
 
 object Main extends App {
 
@@ -23,21 +24,19 @@ object Main extends App {
     playloop(boardState, r, null)
   }
 
+  @tailrec
   def playloop(boardState: BoardState, r: RandomWithState, prevPlay: ((Int, Int), (Int, Int))): Unit = {
     val position = IO_Utils.getUserInputPosition(boardState.board, "Insert next move or undo")
-    val isUndo = Board.checkPosition(boardState.board, position) == 1
+    val isUndo = position == (-1,-1)
     val newUserBoard =
-      if (isUndo) {
+      if (isUndo)
         new BoardState(undo(boardState.board, prevPlay))
-      }
-      else {
+      else
         new BoardState(play(boardState.board, Cells.Red, position))
-      }
     printBoard(newUserBoard)
 
-    if(isUndo) {
+    if(isUndo)
       playloop(newUserBoard, r, null)
-    }
     else {
       val newRand = randomMove(newUserBoard.board, r)
       val newPCBoard = new BoardState(play(newUserBoard.board, Cells.Blue, newRand._1))
