@@ -1,11 +1,18 @@
 package HexGame
 
+import HexGame.Board.{Board, getSize}
 import Utils.RandomWithState
 
 import scala.annotation.tailrec
 
-case class BoardState(boardSize: Int) {
-  val board: Board.Board = List.fill(boardSize, boardSize)(Cells.Empty)
+case class BoardState(board: Board, boardSize: Int){
+  def this(boardSize: Int) {
+    this(List.fill(boardSize, boardSize)(Cells.Empty), boardSize);
+  }
+
+  def this(board: Board) {
+    this(board, getSize(board));
+  }
 }
 
 object Board {

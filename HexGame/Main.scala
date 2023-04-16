@@ -7,7 +7,7 @@ import scala.collection.SortedMap
 
 object Main extends App {
 
-  val board = BoardState(5)
+  val board = new BoardState(5)
   val size = Int
   val r = MyRandom(10)
   val cont = StartMenu("Name", Map())
