@@ -25,7 +25,7 @@ object IO_Utils {
   }
 
   @tailrec
-  def optionPrompt(options: SortedMap[Int, CommandLineOption]): Option[BoardGame] = {
+  def optionPrompt(options: SortedMap[Int, CommandLineOption]): Option[CommandLineOption] = {
     println("--> Welcome to the HEX game! <--")
     println("-- Options --")
     options.toList map ((option: (Int, CommandLineOption)) => println(option._1 + ") " + option._2.name))
@@ -36,7 +36,7 @@ object IO_Utils {
     }
   }
 
-  def printInstructions(board: BoardGame): BoardGame = {
+  def printInstructions(board: StartMenu): StartMenu = {
     println("-- Instructions --" +
       "\nHex is a 2-player board game in which players attempt to connect opposite sides of the board." +
       "\nAvailable commands:" +
@@ -46,7 +46,7 @@ object IO_Utils {
     board
   }
 
-  def printRandomPosition(board: BoardGame, r: MyRandom): BoardGame = {
+  def printRandomPosition(board: StartMenu, r: MyRandom): StartMenu = {
     println(r)
     board
   }

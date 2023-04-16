@@ -1,15 +1,15 @@
 package HexGame
 
-import Utils.{CommandLineOption, IO_Utils, MyRandom, RandomWithState}
+import Utils.{CommandLineOption, IO_Utils, MyRandom, RandomWithState, StartMenu}
 
 import scala.annotation.tailrec
 import scala.collection.SortedMap
 
 object Main extends App {
 
-  val board: BoardGame = BoardGame(5)
   val size = Int
   val r = MyRandom(10)
+  val cont = StartMenu("Name", Map())
 
   // TODO: remove option 5
   val options = SortedMap[Int, CommandLineOption](
@@ -21,14 +21,13 @@ object Main extends App {
     0 -> new CommandLineOption("Exit", _ => sys.exit)
   )
 
-  mainLoop(board, r)
+  mainLoop(cont, r)
 
   @tailrec
-  def mainLoop(cont: BoardGame, random: RandomWithState): Unit = {
+  def mainLoop(opt: StartMenu, random: RandomWithState): Unit = {
     IO_Utils.optionPrompt(options) match {
-      // has a bug here
-      case Some(opt) => val newCont = opt.exec(cont); mainLoop(newCont, random)
-      case _ => println("Invalid option"); mainLoop(cont, random)
+      case Some(opt) => val newOpt = opt.exec(cont); mainLoop(newOpt, random)
+      case _ => println("Invalid option"); mainLoop(opt, random)
     }
   }
 }
