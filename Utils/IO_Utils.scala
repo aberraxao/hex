@@ -1,6 +1,8 @@
 package Utils
 
+import HexGame.Board.{Board, checkPosition}
 import HexGame.BoardState
+import Utils.IO_Utils.getUserInputOption
 
 import scala.annotation.tailrec
 import scala.collection.SortedMap
@@ -29,15 +31,24 @@ object IO_Utils {
     Try(scala.io.StdIn.readLine.trim.toInt)
   }
 
-  def getUserInputPosition(msg:String): (Int, Int) = {
-    // TODO: validate if we receive 2 valid integers
-    // TODO: allow undo
-    // TODO: don't skip user player if position is not allowed
+  def getUserInputPosition(board: Board, msg: String): (Int, Int) = {
     print(msg + ": ")
     val splitInput = scala.io.StdIn.readLine.trim.split(" ")
-    val row = splitInput(0).toInt
-    val col = splitInput(1).toInt
-    (row, col)
+    val position = splitInput.toList match {
+      case "undo" :: _ => (-1, -1)
+      case x :: y :: _ => try {
+        (x.toInt, y.toInt)
+      } catch {
+        case _: NumberFormatException => getUserInputPosition(board, "Insert a valid move or undo")
+      }
+      case _ => null
+    }
+    if (checkPosition(board, position) == 1 && position != (-1,-1) ) {
+      getUserInputPosition(board, "Insert a valid move or undo")
+    }
+    else {
+      position
+    }
   }
 
   def printWait(): Unit = {
@@ -67,5 +78,4 @@ object IO_Utils {
     printWait()
     new BoardState(5)
   }
-
 }
