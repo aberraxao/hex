@@ -4,57 +4,59 @@ import HexGame.{Board, BoardState}
 
 import scala.annotation.tailrec
 import scala.collection.SortedMap
-import scala.io.StdIn.readLine
 import scala.util.{Failure, Success, Try}
 
 object IO_Utils {
 
-  def getUserInputInt(msg: String): Try[Int] = {
+  def getUserInputOption(msg: String): Try[Int] = {
     print(msg + ": ")
-    Try(readLine.trim.toUpperCase.toInt)
+    Try(scala.io.StdIn.readLine.trim.toInt)
   }
 
-  def getUserInputIntIIIII(msg: String): Int = {
+  def promptInt(msg: String): Int = {
     print(msg + ": ")
-    readLine.trim.toUpperCase.toInt
-  }
-
-  def prompt(msg: String): String = {
-    print(msg + ": ")
-    scala.io.StdIn.readLine()
+    scala.io.StdIn.readInt()
   }
 
   @tailrec
-  def optionPrompt(options: SortedMap[Int, CommandLineOption]): Option[CommandLineOption] = {
+  def showPrompt(options: SortedMap[Int, String]): Unit = {
     println("--> Welcome to the HEX game! <--")
-    println("-- Options --")
-    options.toList map ((option: (Int, CommandLineOption)) => println(option._1 + ") " + option._2.name))
+    options.toList map ((option: (Int, String)) => println(option._1 + ") " + option._2))
 
-    getUserInputInt("Select an option") match {
-      case Success(i) => options.get(i)
-      case Failure(_) => println("Invalid number!"); optionPrompt(options)
+    getUserInputOption("Select an option") match {
+      case Success(i) => i match {
+        case 0 => sys.exit
+        case 1 => printInstructions(); showPrompt(options)
+        case 2 => startNewGame()
+        case 3 => continueGame()
+      }
+      case Failure(_) => println("Invalid number!"); showPrompt(options)
     }
   }
 
-  def printInstructions(board: StartMenu): StartMenu = {
+  def printWait(): Unit = {
+    println("Press any key to continue...")
+    scala.io.StdIn.readLine()
+  }
+
+  def printInstructions(): Unit = {
     println("-- Instructions --" +
       "\nHex is a 2-player board game in which players attempt to connect opposite sides of the board." +
       "\nAvailable commands:" +
       "\nx y: to attempt to move to the position (x,y)" +
       "\nundo: to undo your last move" +
       "\nexit: to save the game and exit")
-    board
-  }
-  /*
-  def printBoard(board: StartMenu): StartMenu = {
-    Board.printBoard(board)
-    board
+    printWait()
   }
 
-  def printRandomPosition(board: StartMenu, r: MyRandom): StartMenu = {
-    println(r)
-    board
+  def startNewGame(): BoardState = {
+    val boardSize = promptInt("Pick board dimension")
+    new BoardState(boardSize)
   }
-  */
+
+  def continueGame(): Unit = {
+    println("TODO CONTINUE NEW GAME")
+    printWait()
+  }
 
 }
