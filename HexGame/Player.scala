@@ -1,3 +1,3 @@
 package HexGame
 
-case class Player()// eeee
+case class Player()
