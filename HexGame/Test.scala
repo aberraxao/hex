@@ -1,9 +1,11 @@
 package HexGame
 
-import HexGame.Board.{Board, getSize, play, printBoard}
+import HexGame.Board.{Board, getSize, play, printBoard, randomMove}
+import Utils.{MyRandom, RandomWithState}
 
 object Test extends App {
 
+  val r = MyRandom(10)
   val test = new BoardState(5)
   printBoard(test.board, Board.getSize(test.board))
 
@@ -14,13 +16,25 @@ object Test extends App {
   printBoard(newTest.board, getSize(test.board))
    */
 
-  println("Player blue: 2 2")
   val newTest = new BoardState(play(test.board, Cells.Blue, 2, 2))
+  println("Player blue: 2 2")
   printBoard(newTest.board, getSize(test.board))
 
-  println("Player red: 2 2")
   val newTest2 = new BoardState(play(newTest.board, Cells.Red, 2, 1))
+  println("Player red: 2 1")
   printBoard(newTest2.board, getSize(test.board))
+
+  val newRand = randomMove(newTest2.board, r)
+  val newPos = newRand._1
+  val newTest3 = new BoardState(play(newTest2.board, Cells.Blue, newPos))
+  println("Player blue pc: " + newPos)
+  printBoard(newTest3.board, getSize(test.board))
+
+  val newRand1 = randomMove(newTest2.board, newRand._2)
+  val newPos2 = randomMove(newTest2.board, newRand1._2)._1
+  val newTest4 = new BoardState(play(newTest3.board, Cells.Red, newPos2))
+  println("Player red pc: " + newPos2)
+  printBoard(newTest4.board, getSize(test.board))
 
   /*
   println("Player red: 1 2")

@@ -35,6 +35,15 @@ object Board {
    * @param col    número da coluna onde vai ser efetuada a jogada
    * @return tabuleiro de jogo atualizado (com ou sem jogada efetuada)
    */
+  def play(board: Board, player: Cells.Cell, cell: (Int, Int)): Board = {
+
+    if (cell._1 < 0 || cell._1 >= getSize(board) || cell._2 < 0 || cell._2 >= getSize(board) || board(cell._1)(cell._2) != Cells.Empty) {
+      board
+    } else {
+      board.updated(cell._1, board(cell._1).updated(cell._2, player))
+    }
+  }
+
   def play(board: Board, player: Cells.Cell, row: Int, col: Int): Board = {
 
     if (row < 0 || row >= getSize(board) || col < 0 || col >= getSize(board) || board(row)(col) != Cells.Empty) {
