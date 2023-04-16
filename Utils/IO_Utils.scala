@@ -1,6 +1,6 @@
 package Utils
 
-import HexGame.{Board, BoardState}
+import HexGame.BoardState
 
 import scala.annotation.tailrec
 import scala.collection.SortedMap
@@ -14,7 +14,7 @@ object IO_Utils {
   }
 
   @tailrec
-  def showPrompt(options: SortedMap[Int, String]): Unit = {
+  def showPrompt(options: SortedMap[Int, String]): BoardState = {
     println("--> Welcome to the HEX game! <--")
     options.toList map ((option: (Int, String)) => println(option._1 + ") " + option._2))
 
@@ -46,14 +46,15 @@ object IO_Utils {
 
   def startNewGame(): BoardState = {
     getUserInputOption("Pick board dimension") match {
-      case Success(boardSize) => new BoardState(boardSize)
+      case Success(boardSize) => new BoardState(boardSize);
       case Failure(_) => println("Invalid board dimension!"); startNewGame()
     }
   }
 
-  def continueGame(): Unit = {
+  def continueGame(): BoardState = {
     println("TODO CONTINUE NEW GAME")
     printWait()
+    new BoardState(5)
   }
 
 }

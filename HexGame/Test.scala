@@ -1,6 +1,6 @@
 package HexGame
 
-import HexGame.Board.{Board, getSize, play, printBoard}
+import HexGame.Board.{getSize, play, printBoard}
 
 object Test extends App {
 
