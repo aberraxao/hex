@@ -1,6 +1,6 @@
 package Utils
 
-import HexGame.{Board, BoardState}
+import HexGame.{BoardState}
 
 import scala.annotation.tailrec
 import scala.collection.SortedMap

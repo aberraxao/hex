@@ -75,7 +75,6 @@ object Board {
   }
 */
 
-
   @tailrec
   def randomMove(board: Board, rand: RandomWithState): ((Int, Int), RandomWithState) = {
     val (row, firstRandom) = rand.nextInt(board.length)
@@ -90,9 +89,10 @@ object Board {
    *
    * @param board
    */
-  // Função para representar o tabuleiro visualmente com slashes e backslashes
+  @tailrec
   def printBoard(board: Board, boardSize: Int): Unit = {
 
+    @tailrec
     def printBoardHeader(n: Int): Unit = {
       if (n <= 0) {
         return
@@ -104,6 +104,7 @@ object Board {
       printBoardHeader(n - 1)
     }
 
+    @tailrec
     def printBoardEdge(n: Int, boardRow: Int): Unit = {
       if (n <= 0) {
         return
@@ -116,9 +117,9 @@ object Board {
       printBoardEdge(n - 1, boardRow)
     }
 
+    @tailrec
     def printBoardLine(n: Int): Unit = {
       if (n <= 0) {
-        return
       } else {
         if (n == 1) {
           print("\\")
@@ -129,6 +130,7 @@ object Board {
       }
     }
 
+    @tailrec
     def printRow(row: List[Cells.Cell], boardRow: Int): Unit = {
       if (row.nonEmpty) {
         val cellValue = row.head match {
