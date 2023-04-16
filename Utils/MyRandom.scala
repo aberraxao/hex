@@ -1,9 +1,5 @@
 package Utils
 
-trait RandomWithState {
-  def nextInt: (Int, RandomWithState)
-  def nextInt(n: Int): (Int, RandomWithState)
-}
 case class MyRandom(seed: Long) extends RandomWithState {
   def nextInt: (Int, RandomWithState) = {
     val newSeed = (seed * 0x5DEECE66DL + 0xBL) & 0xFFFFFFFFFFFFL
