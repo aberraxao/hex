@@ -8,11 +8,6 @@ import scala.util.{Failure, Success, Try}
 
 object IO_Utils {
 
-  def getUserInputOption(msg: String): Try[Int] = {
-    print(msg + ": ")
-    Try(scala.io.StdIn.readLine.trim.toInt)
-  }
-
   @tailrec
   def showPrompt(options: SortedMap[Int, String]): BoardState = {
     println("--> Welcome to the HEX game! <--")
@@ -27,6 +22,22 @@ object IO_Utils {
       }
       case Failure(_) => println("Invalid number!"); showPrompt(options)
     }
+  }
+
+  def getUserInputOption(msg: String): Try[Int] = {
+    print(msg + ": ")
+    Try(scala.io.StdIn.readLine.trim.toInt)
+  }
+
+  def getUserInputPosition(msg:String): (Int, Int) = {
+    // TODO: validate if we receive 2 valid integers
+    // TODO: allow undo
+    // TODO: don't skip user player if position is not allowed
+    print(msg + ": ")
+    val splitInput = scala.io.StdIn.readLine.trim.split(" ")
+    val row = splitInput(0).toInt
+    val col = splitInput(1).toInt
+    (row, col)
   }
 
   def printWait(): Unit = {
