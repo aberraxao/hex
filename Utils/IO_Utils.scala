@@ -13,11 +13,6 @@ object IO_Utils {
     Try(scala.io.StdIn.readLine.trim.toInt)
   }
 
-  def promptInt(msg: String): Int = {
-    print(msg + ": ")
-    scala.io.StdIn.readInt()
-  }
-
   @tailrec
   def showPrompt(options: SortedMap[Int, String]): Unit = {
     println("--> Welcome to the HEX game! <--")
@@ -50,8 +45,10 @@ object IO_Utils {
   }
 
   def startNewGame(): BoardState = {
-    val boardSize = promptInt("Pick board dimension")
-    new BoardState(boardSize)
+    getUserInputOption("Pick board dimension") match {
+      case Success(boardSize) => new BoardState(boardSize)
+      case Failure(_) => println("Invalid board dimension!"); startNewGame()
+    }
   }
 
   def continueGame(): Unit = {
