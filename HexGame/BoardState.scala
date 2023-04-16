@@ -5,7 +5,7 @@ import Utils.RandomWithState
 
 import scala.annotation.tailrec
 
-case class BoardState(board: Board, boardSize: Int){
+case class BoardState(board: Board, boardSize: Int) {
   def this(boardSize: Int) {
     this(List.fill(boardSize, boardSize)(Cells.Empty), boardSize);
   }
@@ -14,22 +14,6 @@ case class BoardState(board: Board, boardSize: Int){
     this(board, getSize(board));
   }
 }
-
-/*
-def emptyBoard(size: Int, count1: Int): Board = {
-    def emptyList(count2: Int): List[Cells.Cell] = {
-      if (count2 == 0)
-        Nil
-      else
-        Cells.Empty :: emptyList(count2 - 1)
-    }
-
-    if(count1 == 0)
-      Nil
-    else
-      emptyList(size) :: emptyBoard(size, count1 - 1)
-  }
- */
 
 object Board {
   type Board = List[List[Cells.Cell]]
@@ -59,21 +43,6 @@ object Board {
       board.updated(row, board(row).updated(col, player))
     }
   }
-  /*
-  def play(board: Board, player: Cells.Cell, row: Int, col: Int): Board = {
-    def aux(b: Board, r: Int, c: Int): Board = b match {
-      case Nil => Nil
-      case x :: xs => if (r != row) x :: aux(xs, r + 1, col) else aux2(x, c) :: xs
-    }
-
-    def aux2(l: List[Cells.Cell], c: Int): List[Cells.Cell] = l match {
-      case Nil => Nil
-      case y :: ys => if (c == col) player :: ys else y :: aux2(ys, c + 1)
-    }
-
-    aux(board, 0, 0)
-  }
-*/
 
   @tailrec
   def randomMove(board: Board, rand: RandomWithState): ((Int, Int), RandomWithState) = {
@@ -85,12 +54,15 @@ object Board {
       randomMove(board, nextRandom)
   }
 
-  /** Função para representar o tabuleiro visualmente com slashes e backslashes
-   *
-   * @param board
+  /**
+   * Função para representar o tabuleiro visualmente com slashes e backslashes
    */
-  @tailrec
-  def printBoard(board: Board, boardSize: Int): Unit = {
+  def printBoard(boardState: BoardState): Unit = {
+    val boardSize = boardState.boardSize
+    printBoardInner(boardState.board, boardSize)
+  }
+
+  def printBoardInner(board: Board, boardSize: Int): Unit = {
 
     @tailrec
     def printBoardHeader(n: Int): Unit = {
@@ -173,7 +145,7 @@ object Board {
         println()
       }
 
-      printBoard(board.tail, boardSize)
+      printBoardInner(board.tail, boardSize)
     }
   }
 }
