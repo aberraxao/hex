@@ -1,6 +1,6 @@
 package HexGame
 
-import HexGame.Board.{Board, getSize, play, printBoard, randomMove}
+import HexGame.Board.{Board, getSize, play, printBoard, randomMove, undo}
 import Utils.{MyRandom, RandomWithState}
 
 object Test extends App {
@@ -35,6 +35,10 @@ object Test extends App {
   val newTest4 = new BoardState(play(newTest3.board, Cells.Red, newPos2))
   println("Player red pc: " + newPos2)
   printBoard(newTest4.board, getSize(test.board))
+
+  val newTest5 = new BoardState(undo(newTest4.board, newPos2))
+  println("Undo: " + newPos2)
+  printBoard(newTest5.board, getSize(test.board))
 
   /*
   println("Player red: 1 2")
