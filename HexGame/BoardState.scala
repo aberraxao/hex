@@ -127,14 +127,28 @@ object Board {
     printBoardInner(boardState.board, boardSize)
   }
 
-  @tailrec
-  def printBoardInner(board: Board, boardSize: Int): Unit = {
+
+  def printBoardInner(board: Board, size: Int): Unit = {
+    val size = board.length
+
+    def printSpace(n: Int): Unit = {
+      if (n > 0) {
+        print(" ")
+        printSpace(n - 1)
+      }
+    }
+
+    def cellVal(cell: Cells.Cell): String = cell match {
+      case Cells.Red => "\u001B[31mX\u001B[0m"
+      case Cells.Blue => "\u001B[34mO\u001B[0m"
+      case Cells.Empty => "."
+    }
 
     @tailrec
     def printBoardHeader(n: Int): Unit = {
       if (n > 0) {
         if (n == 1)
-          print("\u001B[34m *\u001B[0m")
+          print("\u001B[34m *\n\u001B[0m")
         else
           print("\u001B[34m *  \u001B[0m")
         printBoardHeader(n - 1)
@@ -142,71 +156,37 @@ object Board {
     }
 
     @tailrec
-    def printBoardEdge(n: Int, boardRow: Int): Unit = {
-      if (n > 0) {
-        if (boardRow % 2 == 0 && n == 2)
-          print("\u001B[31m*\u001B[0m")
-        else
-          print(" ")
-        printBoardEdge(n - 1, boardRow)
-      }
+    def printRow(row: List[Cells.Cell]): Unit = row match {
+      case x :: Nil => print(cellVal(x) + "\u001B[31m *\u001B[0m\n")
+      case x :: xs => print(cellVal(x) + " - "); printRow(xs)
+    }
+
+    def printRow2(row: List[Cells.Cell]): Unit = row match {
+      case x :: Nil => print(" \\ \n")
+      case x :: xs => print(" \\ /"); printRow2(xs)
     }
 
     @tailrec
-    def printBoardLine(n: Int): Unit = {
-      if (n > 0) {
-        if (n == 1)
-          print("\\")
-        else
-          print("\\ / ")
-        printBoardLine(n - 1)
+    def aux(board2: Board, acc: Int): Unit = {
+      board2 match {
+        case x :: Nil =>
+          printSpace(acc);
+          print("\u001B[31m* \u001B[0m");
+          printRow(x)
+          printSpace(acc + 2);
+          printBoardHeader(size)
+        case x :: xs =>
+          printSpace(acc);
+          print("\u001B[31m* \u001B[0m");
+          printRow(x)
+          printSpace(acc + 2);
+          printRow2(x)
+          aux(board2.tail, acc + 2)
       }
     }
 
-    @tailrec
-    def printRow(row: List[Cells.Cell], boardRow: Int): Unit = {
-      if (row.nonEmpty) {
-        val cellValue = row.head match {
-          case Cells.Red => "\u001B[31mX\u001B[0m"
-          case Cells.Blue => "\u001B[34mO\u001B[0m"
-          case Cells.Empty => "."
-        }
-
-        if (row.tail.nonEmpty)
-          print(cellValue + " - ")
-        else
-          print(cellValue + "\u001B[31m *\u001B[0m")
-
-        printRow(row.tail, boardRow)
-      }
-      else println()
-    }
-
-    val boardRow = 2 * (boardSize - getSize(board))
-    val boardEdgeVal = 2 + boardRow
-
-    if (board.nonEmpty) {
-      if (boardRow == 0) {
-        printBoardHeader(boardSize)
-        println()
-      }
-
-      printBoardEdge(boardEdgeVal, boardRow)
-      printRow(board.head, boardRow)
-
-      if (board.tail.nonEmpty) {
-        printBoardEdge(boardEdgeVal + 1, boardRow + 1)
-        printBoardLine(boardSize)
-        println()
-      }
-      else {
-        printBoardEdge(boardEdgeVal, 1)
-        printBoardHeader(boardSize)
-        println()
-      }
-
-      printBoardInner(board.tail, boardSize)
-    }
+    printBoardHeader(size)
+    aux(board, 0)
   }
 
   def saveBoard(boardState: BoardState, fileName: String): Unit = {

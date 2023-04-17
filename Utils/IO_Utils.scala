@@ -20,8 +20,9 @@ object IO_Utils {
         case 1 => printInstructions(); showPrompt(options)
         case 2 => startNewGame()
         case 3 => continueGame()
+        case _ => println("Invalid number!");printWait(); showPrompt(options)
       }
-      case Failure(_) => println("Invalid number!"); showPrompt(options)
+      case Failure(_) => println("Invalid option!"); printWait(); showPrompt(options)
     }
   }
 
