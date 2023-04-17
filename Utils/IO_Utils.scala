@@ -1,7 +1,7 @@
 package Utils
 
-import HexGame.Board.{Board, isPositionInsideBoard, isValidPosition}
-import HexGame.BoardState
+import HexGame.Board.{Board, isValidPlay}
+import HexGame.{BoardState, Cells}
 
 import scala.annotation.tailrec
 import scala.collection.SortedMap
@@ -42,7 +42,7 @@ object IO_Utils {
       }
       case _ => null
     }
-    if (!isValidPosition(board, position) && position != (-1,-1))
+    if (!isValidPlay(board, position) && position != (-1,-1))
       getUserInputPosition(board, "Insert a valid move or undo")
     else
       position
