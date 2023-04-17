@@ -24,6 +24,7 @@ object Main extends App {
     playloop(boardState, r, null)
   }
 
+  @tailrec
   def playloop(boardState: BoardState, r: RandomWithState, prevPlay: ((Int, Int), (Int, Int))): Unit = {
     val newUserPosition = IO_Utils.getUserInputPosition(boardState.board, "Insert next move or undo")
     val isUndo = newUserPosition == (-1, -1)

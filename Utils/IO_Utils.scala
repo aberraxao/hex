@@ -1,7 +1,7 @@
 package Utils
 
 import HexGame.Board.{Board, isValidPlay, readBoard}
-import HexGame.{BoardState, Cells}
+import HexGame.BoardState
 
 import scala.annotation.tailrec
 import scala.collection.SortedMap
@@ -63,6 +63,7 @@ object IO_Utils {
     printWait()
   }
 
+  @tailrec
   def startNewGame(): BoardState = {
     getUserInputOption("Pick board dimension") match {
       case Success(boardSize) => new BoardState(boardSize);
