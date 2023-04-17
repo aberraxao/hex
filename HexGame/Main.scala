@@ -1,7 +1,7 @@
 package HexGame
 
 import Utils.{IO_Utils, MyRandom, RandomWithState}
-import HexGame.Board.{play, printBoard, randomMove, undo}
+import HexGame.Board.{play, printBoard, randomMove, saveBoard, undo}
 
 import scala.annotation.tailrec
 import scala.collection.SortedMap
@@ -24,7 +24,6 @@ object Main extends App {
     playloop(boardState, r, null)
   }
 
-  @tailrec
   def playloop(boardState: BoardState, r: RandomWithState, prevPlay: ((Int, Int), (Int, Int))): Unit = {
     val newUserPosition = IO_Utils.getUserInputPosition(boardState.board, "Insert next move or undo")
     val isUndo = newUserPosition == (-1, -1)
@@ -32,11 +31,13 @@ object Main extends App {
     if (isUndo) {
       val newUserBoard = new BoardState(undo(boardState.board, prevPlay))
       printBoard(newUserBoard)
+      saveBoard(newUserBoard, "save.csv")
       playloop(newUserBoard, r, null)
 
     } else {
       val newUserBoard = new BoardState(play(boardState.board, Cells.Red, newUserPosition))
       printBoard(newUserBoard)
+      saveBoard(newUserBoard, "save.csv")
 
       val newRand = randomMove(newUserBoard.board, r)
       val nextRandom = newRand._2
@@ -44,6 +45,7 @@ object Main extends App {
 
       val newPCBoard = new BoardState(play(newUserBoard.board, Cells.Blue, newPCPosition))
       printBoard(newPCBoard)
+      saveBoard(newPCBoard, "save.csv")
 
       playloop(newPCBoard, nextRandom, (newUserPosition, newPCPosition))
     }

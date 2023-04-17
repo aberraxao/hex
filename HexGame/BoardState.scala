@@ -194,4 +194,13 @@ object Board {
       printBoardInner(board.tail, boardSize)
     }
   }
+
+  def saveBoard(boardState: BoardState, fileName: String): Unit = {
+    Utils.File_Utils.saveCsv(fileName, boardState)
+  }
+
+  def readBoard(fileName:String): BoardState = {
+    Utils.File_Utils.readCsv(fileName)
+  }
+
 }

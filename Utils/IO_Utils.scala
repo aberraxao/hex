@@ -1,6 +1,6 @@
 package Utils
 
-import HexGame.Board.{Board, isValidPlay}
+import HexGame.Board.{Board, isValidPlay, readBoard}
 import HexGame.{BoardState, Cells}
 
 import scala.annotation.tailrec
@@ -71,8 +71,6 @@ object IO_Utils {
   }
 
   def continueGame(): BoardState = {
-    println("TODO CONTINUE NEW GAME")
-    printWait()
-    new BoardState(5)
+    readBoard("save.csv")
   }
 }
