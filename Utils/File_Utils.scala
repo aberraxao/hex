@@ -1,7 +1,7 @@
 package Utils
 
-import HexGame.Board.{Board, play}
-import HexGame.{BoardState, Cells}
+import HexGame.Board.getPlay
+import HexGame.BoardState
 
 import java.io.{File, FileWriter, IOException}
 import scala.io.Source
@@ -17,23 +17,14 @@ object File_Utils {
       for ((line, row) <- sf.getLines.zipWithIndex) {
         val splitRow = line.split(",")
         for ((player, col) <- splitRow.zipWithIndex) {
-          savedBoard = new BoardState(updateSavedBoard(player, savedBoard, row, col))
+          savedBoard = new BoardState(getPlay(savedBoard.board, player, (row, col)))
         }
       }
       sf.close
       savedBoard
     }
     catch {
-      case e: IOException => println("Erro de leitura do ficheiro"); sys.exit()
-    }
-  }
-
-  def updateSavedBoard(player: String, savedBoard: BoardState, row: Int, col: Int): Board = {
-    player match {
-      case "Red" => play(savedBoard.board, Cells.Red, (row, col))
-      case "Blue" => play(savedBoard.board, Cells.Blue, (row, col))
-      case "Empty" => savedBoard.board
-      case _ => println("Há um erro no ficheiro"); savedBoard.board
+      case _: IOException => println("Erro de leitura do ficheiro"); sys.exit()
     }
   }
 

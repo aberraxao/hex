@@ -11,17 +11,26 @@ case class BoardState(board: Board, boardSize: Int) {
   }
 
   def this(board: Board) {
-    this(board, getSize(board));
+    this(board, getSize(board))
   }
 }
 
 object Board {
   type Board = List[List[Cells.Cell]]
-  //type PlayerRandom = Player
+  // type PlayerRandom = Player
   // type PlayerUser = Player
 
   def getSize(board: Board): Int = {
     board.length
+  }
+
+  def play(board: Board, player: Cells.Cell, position: (Int, Int)): Board = {
+    if (!isValidPlay(board, position))
+      board
+    else {
+      println("Player " + player + ": " + position)
+      board.updated(position._1, board(position._1).updated(position._2, player))
+    }
   }
 
   /**
@@ -35,15 +44,6 @@ object Board {
    * @param col    número da coluna onde vai ser efetuada a jogada
    * @return tabuleiro de jogo atualizado (com ou sem jogada efetuada)
    */
-  def play(board: Board, player: Cells.Cell, position: (Int, Int)): Board = {
-    if (!isValidPlay(board, position))
-      board
-    else {
-      println("Player " + player + ": " + position)
-      board.updated(position._1, board(position._1).updated(position._2, player))
-    }
-  }
-
   def play(board: Board, player: Cells.Cell, row: Int, col: Int): Board = {
     play(board, player, (row, col))
   }
@@ -62,6 +62,19 @@ object Board {
       board
     else
       board.updated(position._1, board(position._1).updated(position._2, Cells.Empty))
+  }
+
+  def getPlay(board: Board, player: String, position: (Int, Int)): Board = {
+    if (!isValidPlay(board, position))
+      board
+    else {
+      player match {
+        case "Red" => board.updated(position._1, board(position._1).updated(position._2, Cells.Red))
+        case "Blue" => board.updated(position._1, board(position._1).updated(position._2, Cells.Blue))
+        case "Empty" => board
+        case _ => println("Há um erro no ficheiro"); board
+      }
+    }
   }
 
   def isPositionInsideBoard(board: Board, position: (Int, Int)): Boolean = {
@@ -114,6 +127,7 @@ object Board {
     printBoardInner(boardState.board, boardSize)
   }
 
+  @tailrec
   def printBoardInner(board: Board, boardSize: Int): Unit = {
 
     @tailrec
