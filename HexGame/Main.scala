@@ -1,9 +1,10 @@
 package HexGame
 
-import scala.collection.SortedMap
 import Utils.{IO_Utils, MyRandom, RandomWithState}
 import HexGame.Board.{play, printBoard, randomMove, undo}
 
+import scala.annotation.tailrec
+import scala.collection.SortedMap
 
 object Main extends App {
 
@@ -23,29 +24,28 @@ object Main extends App {
     playloop(boardState, r, null)
   }
 
+  @tailrec
   def playloop(boardState: BoardState, r: RandomWithState, prevPlay: ((Int, Int), (Int, Int))): Unit = {
-    val position = IO_Utils.getUserInputPosition(boardState.board, "Insert next move or undo")
-    val isUndo = Board.checkPosition(boardState.board, position) == 1
-    val newUserBoard =
-      if (isUndo) {
-        new BoardState(undo(boardState.board, prevPlay))
-      }
-      else {
-        new BoardState(play(boardState.board, Cells.Red, position))
-      }
-    printBoard(newUserBoard)
+    val newUserPosition = IO_Utils.getUserInputPosition(boardState.board, "Insert next move or undo")
+    val isUndo = newUserPosition == (-1, -1)
 
-    if(isUndo) {
+    if (isUndo) {
+      val newUserBoard = new BoardState(undo(boardState.board, prevPlay))
+      printBoard(newUserBoard)
       playloop(newUserBoard, r, null)
-    }
-    else {
+
+    } else {
+      val newUserBoard = new BoardState(play(boardState.board, Cells.Red, newUserPosition))
+      printBoard(newUserBoard)
+
       val newRand = randomMove(newUserBoard.board, r)
-      val newPCBoard = new BoardState(play(newUserBoard.board, Cells.Blue, newRand._1))
+      val nextRandom = newRand._2
+      val newPCPosition = newRand._1
+
+      val newPCBoard = new BoardState(play(newUserBoard.board, Cells.Blue, newPCPosition))
       printBoard(newPCBoard)
 
-      val newPlay = (position, newRand._1)
-
-      playloop(newPCBoard, newRand._2, newPlay)
+      playloop(newPCBoard, nextRandom, (newUserPosition, newPCPosition))
     }
   }
 }

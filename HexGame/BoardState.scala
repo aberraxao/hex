@@ -7,7 +7,7 @@ import scala.annotation.tailrec
 
 case class BoardState(board: Board, boardSize: Int) {
   def this(boardSize: Int) {
-    this(List.fill(boardSize, boardSize)(Cells.Empty), boardSize);
+    this(List.fill(boardSize, boardSize)(Cells.Empty), boardSize)
   }
 
   def this(board: Board) {
@@ -35,58 +35,65 @@ object Board {
    * @param col    número da coluna onde vai ser efetuada a jogada
    * @return tabuleiro de jogo atualizado (com ou sem jogada efetuada)
    */
-  def play(board: Board, player: Cells.Cell, cell: (Int, Int)): Board = {
-
-    if (cell._1 < 0 || cell._1 >= getSize(board) || cell._2 < 0 || cell._2 >= getSize(board) || board(cell._1)(cell._2) != Cells.Empty) {
+  def play(board: Board, player: Cells.Cell, position: (Int, Int)): Board = {
+    if (!isValidPlay(board, position))
       board
-    } else {
-      println("Player " + player + ": " + cell)
-      board.updated(cell._1, board(cell._1).updated(cell._2, player))
+    else {
+      println("Player " + player + ": " + position)
+      board.updated(position._1, board(position._1).updated(position._2, player))
     }
   }
 
   def play(board: Board, player: Cells.Cell, row: Int, col: Int): Board = {
-
-    if (row < 0 || row >= getSize(board) || col < 0 || col >= getSize(board) || board(row)(col) != Cells.Empty) {
-      board
-    } else {
-      board.updated(row, board(row).updated(col, player))
-    }
+    play(board, player, (row, col))
   }
 
-  def undo(board: Board, cells: ((Int, Int),(Int, Int))): Board = {
-    if (cells == null) {
+  def undo(board: Board, positions: ((Int, Int), (Int, Int))): Board = {
+    if (positions == null)
       board
-    } else {
-      val firstUndoCell = cells._2
-      val secondUndoCell = cells._1
-      undoSinglePlay(undoSinglePlay(board,firstUndoCell), secondUndoCell)
-    }
-  }
-
-  def undoSinglePlay(board: Board, cell: (Int, Int)): Board = {
-    if (cell == null) {
-      board
-    } else if (cell._1 < 0 || cell._1 >= getSize(board) || cell._2 < 0 || cell._2 >= getSize(board)) {
-      board
-    }
     else {
-      board.updated(cell._1, board(cell._1).updated(cell._2, Cells.Empty))
+      println("Undo was done")
+      undoSinglePlay(undoSinglePlay(board, positions._1), positions._2)
     }
   }
 
-  def checkPosition(board: Board, position: (Int, Int)): Int = {
+  def undoSinglePlay(board: Board, position: (Int, Int)): Board = {
+    if (!isValidUndo(board, position))
+      board
+    else
+      board.updated(position._1, board(position._1).updated(position._2, Cells.Empty))
+  }
+
+  def isPositionInsideBoard(board: Board, position: (Int, Int)): Boolean = {
     if (position == null ||
       position._1 < 0 ||
       position._1 >= getSize(board) ||
       position._2 < 0 ||
-      position._2 >= getSize(board) ||
-      board(position._1)(position._2) != Cells.Empty) {
-      1
-    }
-    else {
-      0
-    }
+      position._2 >= getSize(board))
+      false
+    else
+      true
+  }
+
+  def isPositionEmpty(board: Board, position: (Int, Int)): Boolean = {
+    if (board(position._1)(position._2) == Cells.Empty)
+      true
+    else
+      false
+  }
+
+  def isValidPlay(board: Board, position: (Int, Int)): Boolean = {
+    if (isPositionInsideBoard(board, position) && isPositionEmpty(board, position))
+      true
+    else
+      false
+  }
+
+  def isValidUndo(board: Board, position: (Int, Int)): Boolean = {
+    if (position != null && isPositionInsideBoard(board, position) && !isPositionEmpty(board, position))
+      true
+    else
+      false
   }
 
   @tailrec
@@ -111,39 +118,33 @@ object Board {
 
     @tailrec
     def printBoardHeader(n: Int): Unit = {
-      if (n <= 0) {
-        return
-      } else if (n == 1) {
-        print("\u001B[34m *\u001B[0m")
-      } else {
-        print("\u001B[34m *  \u001B[0m")
+      if (n > 0) {
+        if (n == 1)
+          print("\u001B[34m *\u001B[0m")
+        else
+          print("\u001B[34m *  \u001B[0m")
+        printBoardHeader(n - 1)
       }
-      printBoardHeader(n - 1)
     }
 
     @tailrec
     def printBoardEdge(n: Int, boardRow: Int): Unit = {
-      if (n <= 0) {
-        return
-      } else if (boardRow % 2 == 0 && n == 2) {
-        print("\u001B[31m*\u001B[0m")
-      } else {
-        print(" ")
+      if (n > 0) {
+        if (boardRow % 2 == 0 && n == 2)
+          print("\u001B[31m*\u001B[0m")
+        else
+          print(" ")
+        printBoardEdge(n - 1, boardRow)
       }
-
-      printBoardEdge(n - 1, boardRow)
     }
 
     @tailrec
     def printBoardLine(n: Int): Unit = {
-      if (n <= 0) {
-        return
-      } else {
-        if (n == 1) {
+      if (n > 0) {
+        if (n == 1)
           print("\\")
-        } else {
+        else
           print("\\ / ")
-        }
         printBoardLine(n - 1)
       }
     }
@@ -157,11 +158,10 @@ object Board {
           case Cells.Empty => "."
         }
 
-        if (row.tail.nonEmpty) {
+        if (row.tail.nonEmpty)
           print(cellValue + " - ")
-        } else {
+        else
           print(cellValue + "\u001B[31m *\u001B[0m")
-        }
 
         printRow(row.tail, boardRow)
       }
