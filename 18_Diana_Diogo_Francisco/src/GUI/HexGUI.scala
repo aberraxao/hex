@@ -1,7 +1,5 @@
 package GUI
 
-
-//import HexUtils.generateEmptyBoard
 import Utils.BoardUtils.generateEmptyBoard
 import Utils.{GameState, HexBoard, MyRandom}
 import javafx.application.Application

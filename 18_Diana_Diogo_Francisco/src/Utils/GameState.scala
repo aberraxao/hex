@@ -1,8 +1,5 @@
 package Utils
 
-import Utils.HexBoard.*
-import Utils.{HexBoard, RandomWithState}
-
 case class GameState(hexBoard: HexBoard, history: List[HexBoard], random: RandomWithState){
   def canUndo: Boolean = GameState.canUndo(history)
   def undo: GameState = GameState.undo(history, random)

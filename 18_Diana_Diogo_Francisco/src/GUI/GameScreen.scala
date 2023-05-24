@@ -1,21 +1,17 @@
 package GUI
 
-import GUI.SaveLoadGUI.{readFromFileGUI, readSaveInfoGUI, rewriteSaveInfoGUI, writeToFileGUI}
-import Utils.BoardUtils.*
-import Utils.Cells.Red
+import GUI.SaveLoadGUI.{readSaveInfoGUI, rewriteSaveInfoGUI, writeToFileGUI}
+import Utils.BoardUtils.generateEmptyBoard
 import Utils.{Cells, GameState, HexBoard}
-import Utils.IO_Utils.{readFromFile, readSaveInfo, writeToFile}
-import javafx.application.Platform
-import javafx.event.ActionEvent
 import javafx.fxml.{FXML, FXMLLoader}
-import javafx.scene.control.*
+import javafx.scene.control.{Button, CheckBox, ChoiceBox, Label}
 import javafx.scene.input.MouseEvent
-import javafx.scene.layout.{AnchorPane, FlowPane, GridPane, Pane}
-import javafx.scene.paint.*
-import javafx.scene.shape.*
+import javafx.scene.layout.{AnchorPane, Pane}
+import javafx.scene.paint.Color
+import javafx.scene.shape.Polygon
 import javafx.scene.{Node, Parent}
 
-import scala.collection.JavaConverters.*
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 
 class GameScreen() {

@@ -1,13 +1,12 @@
 package GUI
 
 import Utils.BoardUtils.generateEmptyBoard
-import Utils.IO_Utils.{fileToBoard, initSaveInfo}
+import Utils.IO_Utils.{fileToBoard}
 import Utils.{Cells, GameState, HexBoard, MyRandom, RandomWithState}
 
 import java.io.{File, PrintWriter}
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import scala.annotation.tailrec
 import scala.io.Source
 
 object SaveLoadGUI {

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="Window2" prefHeight="424.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GameScreen">
+    <children>
+          <Button fx:id="undoButton" disable="true" layoutX="434.0" layoutY="129.0" mnemonicParsing="false" onMouseClicked="#doUndoButtonClicked" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: grey; -fx-border-color: #4e4d4d;" text="Undo" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+          <Button fx:id="mainMenu" layoutX="434.0" layoutY="241.0" mnemonicParsing="false" onMouseClicked="#onMainMenuClicked" prefHeight="26.0" prefWidth="102.0" style="-fx-background-color: RED; -fx-border-color: GREY;" text="Main Menu" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+          <Button fx:id="saveButton" layoutX="435.0" layoutY="184.0" mnemonicParsing="false" onMouseClicked="#onSaveButtonClicked" prefHeight="26.0" prefWidth="101.0" style="-fx-background-color: BLUE; -fx-border-color: #4e4d4d;" text="Save" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Polygon fx:id="polyComputer" fill="WHITE" layoutX="429.0" layoutY="112.0" points="221.39996337890625, 75.79290771484375, 209.70703125, 75.79290771484375, 109.5858154296875, -98.39999389648438, 119.79998779296875, -112.70711517333984, 221.39996337890625, -111.99999237060547" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="polyPlayer" fill="WHITE" layoutX="387.0" layoutY="422.0" points="200.20001220703125, 28.0, -86.814208984375, 29.10003662109375, -47.39288330078125, -61.20709228515625, 152.28582763671875, -61.20709228515625" stroke="BLACK" strokeType="INSIDE" />
+        <Pane fx:id="coverBoard" layoutX="43.0" layoutY="97.0" prefHeight="222.0" prefWidth="374.0">
+            <children>
+                <Polygon fx:id="hexagon40" fill="WHITE" layoutX="185.0" layoutY="184.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="BLUE" layoutX="216.0" layoutY="202.0" points="-20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon41" fill="WHITE" layoutX="216.0" layoutY="166.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon31" fill="WHITE" layoutX="185.0" layoutY="148.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon32" fill="WHITE" layoutX="216.0" layoutY="130.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon33" fill="WHITE" layoutX="247.0" layoutY="112.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon42" fill="WHITE" layoutX="247.0" layoutY="148.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="BLUE" layoutX="247.0" layoutY="184.0" points="-20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="BLUE" layoutX="278.0" layoutY="166.0" points="-20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="BLUE" layoutX="309.0" layoutY="148.0" points="-20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="BLUE" layoutX="340.0" layoutY="130.0" points="-20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="RED" layoutX="340.0" layoutY="94.0" points="10.0, 17.4, -10.0, 17.4, -20.0, 0.0" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="RED" layoutX="309.0" layoutY="76.0" points="10.0, 17.4, -10.0, 17.4, -20.0, 0.0" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="RED" layoutX="278.0" layoutY="58.0" points="10.0, 17.4, -10.0, 17.4, -20.0, 0.0" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="RED" layoutX="247.0" layoutY="40.0" points="10.0, 17.4, -10.0, 17.4, -20.0, 0.0" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="RED" layoutX="216.0" layoutY="22.0" points="10.0, 17.4, -10.0, 17.4, -20.0, 0.0" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon43" fill="WHITE" layoutX="278.0" layoutY="130.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon44" fill="WHITE" layoutX="309.0" layoutY="112.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon34" fill="WHITE" layoutX="278.0" layoutY="94.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon24" fill="WHITE" layoutX="247.0" layoutY="76.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon14" fill="WHITE" layoutX="216.0" layoutY="58.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon04" fill="WHITE" layoutX="185.0" layoutY="40.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="BLUE" layoutX="154.0" layoutY="22.0" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon03" fill="WHITE" layoutX="154.0" layoutY="58.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="BLUE" layoutX="123.0" layoutY="40.0" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon02" fill="WHITE" layoutX="123.0" layoutY="76.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="BLUE" layoutX="92.0" layoutY="58.0" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon01" fill="WHITE" layoutX="92.0" layoutY="94.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="BLUE" layoutX="61.0" layoutY="76.0" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="BLUE" layoutX="30.0" layoutY="94.0" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon00" fill="WHITE" layoutX="61.0" layoutY="112.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="RED" layoutX="30.0" layoutY="130.0" points="20.0, 0.0,-10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="RED" layoutX="61.0" layoutY="148.0" points="20.0, 0.0,-10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="RED" layoutX="92.0" layoutY="166.0" points="20.0, 0.0,-10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="RED" layoutX="123.0" layoutY="184.0" points="20.0, 0.0,-10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fill="RED" layoutX="154.0" layoutY="202.0" points="20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon30" fill="WHITE" layoutX="154.0" layoutY="166.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon20" fill="WHITE" layoutX="123.0" layoutY="148.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon10" fill="WHITE" layoutX="92.0" layoutY="130.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon21" fill="WHITE" layoutX="154.0" layoutY="130.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon11" fill="WHITE" layoutX="123.0" layoutY="112.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon12" fill="WHITE" layoutX="154.0" layoutY="94.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon22" fill="WHITE" layoutX="185.0" layoutY="112.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon13" fill="WHITE" layoutX="185.0" layoutY="76.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+                <Polygon fx:id="hexagon23" fill="WHITE" layoutX="216.0" layoutY="94.0" onMouseClicked="#onHexagonClicked" points="20.0, 0.0, 10.0, 17.4, -10.0, 17.4, -20.0, 0.0, -10.0, -17.4, 10.0, -17.4" stroke="BLACK" strokeType="INSIDE" />
+            </children></Pane>
+        <Line endX="23.399993896484375" endY="-39.0" layoutX="316.0" layoutY="401.0" startX="-15.10711669921875" startY="49.3929443359375" />
+        <Line endX="-162.0" endY="128.8000030517578" layoutX="162.0" layoutY="109.0" startX="-115.0999984741211" startY="78.50001525878906" />
+        <Line endX="238.492919921875" endY="61.292877197265625" layoutX="348.0" layoutY="388.0" startX="191.492919921875" startY="-26.0" />
+        <Line endX="150.49288940429688" endY="-59.0" layoutX="187.0" layoutY="73.0" startX="143.49288940429688" startY="-73.0" />
+        <Line endX="-125.10000610351562" endY="113.00001525878906" layoutX="172.0" layoutY="75.0" startX="-172.0" startY="49.89289093017578" />
+        <Line endX="121.78582763671875" endY="0.29290771484375" layoutX="417.0" layoutY="361.0" startX="-76.89288330078125" startY="0.29290771484375" />
+        <Line endX="-60.09999084472656" endY="89.79291534423828" layoutX="139.0" layoutY="97.0" startX="-92.39288330078125" startY="89.79292297363281" />
+        <Line endX="-7.39288330078125" endY="19.79290771484375" layoutX="347.0" layoutY="342.0" startX="-54.9071044921875" startY="-61.9071044921875" />
+        <Line endX="111.78582763671875" endY="31.29290771484375" layoutX="427.0" layoutY="330.0" startX="210.99993896484375" startY="-142.0" />
+        <Line endX="48.89288330078125" endY="47.0928955078125" layoutX="224.0" layoutY="81.0" startX="114.20001220703125" startY="-66.29289245605469" />
+        <Line endX="103.49285888671875" endY="-25.000003814697266" layoutX="435.0" layoutY="39.0" startX="-97.30712890625" startY="-25.000003814697266" />
+        <Line endX="252.70709228515625" endY="44.29290771484375" layoutX="386.0" layoutY="143.0" startX="153.29290771484375" startY="-129.0" />
+        <Line endX="120.0928955078125" endY="-34.000003814697266" layoutX="428.0" layoutY="34.0" startX="111.29290771484375" startY="-21.107105255126953" />
+        <Line endX="473.39990234375" endY="-150.70709228515625" layoutX="175.0" layoutY="338.0" startX="463.70703125" startY="-150.70709228515625" />
+        <Pane fx:id="windowCover" disable="true" onMouseClicked="#continueOnClicked" opacity="0.6" prefHeight="443.0" prefWidth="650.0" style="-fx-background-color: GREY;" visible="false">
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <cursor>
+                <Cursor fx:constant="TEXT" />
+            </cursor>
+        </Pane>
+        <Label fx:id="loseLabel" layoutX="221.0" layoutY="178.0" onMouseClicked="#continueOnClicked" style="-fx-background-color: WHITE; -fx-border-color: #710606;" text="You Lost!" visible="false">
+            <font>
+                <Font size="64.0" />
+            </font>
+        </Label>
+        <Label fx:id="winLabel" alignment="CENTER" disable="true" layoutX="221.0" layoutY="178.0" onMouseClicked="#continueOnClicked" prefWidth="200.0" style="-fx-background-color: WHITE; -fx-border-color: ORANGE;" text="WIN!" textFill="YELLOW" visible="false">
+            <font>
+                <Font size="64.0" />
+            </font>
+        </Label>
+        <Pane fx:id="saveScreen" layoutX="129.0" layoutY="189.0" prefHeight="66.0" prefWidth="398.0" style="-fx-background-color: WHITE; -fx-border-color: BLACK;" visible="false">
+            <children>
+                <Button fx:id="selectSave" layoutX="263.0" layoutY="28.0" mnemonicParsing="false" onMouseClicked="#onSelectSaveClicked" text="Save" />
+                <Button fx:id="returnSave" layoutX="334.0" layoutY="28.0" mnemonicParsing="false" onMouseClicked="#returnSaveOnClicked" text="Return" />
+                <ChoiceBox fx:id="saveChoiceBox" layoutX="39.0" layoutY="30.0" prefHeight="25.0" prefWidth="175.0" />
+                <Text layoutX="40.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a slot to save:" />
+            </children>
+        </Pane>
+        <Pane fx:id="windowBlock" layoutY="-1.0" opacity="0.59" prefHeight="452.0" prefWidth="650.0" style="-fx-background-color: GREY;" visible="false">
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <cursor>
+                <Cursor fx:constant="TEXT" />
+            </cursor>
+        </Pane>
+      <CheckBox fx:id="hard" layoutX="71.0" layoutY="30.0" mnemonicParsing="false" text="CheckBox" visible="false" />
+
+    </children>
+</AnchorPane>
