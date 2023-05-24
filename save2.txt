@@ -1,0 +1,4 @@
+4:Utils.MyRandom(87443922374356)
+0:0:Red
+0:1:Blue
+3:2:Blue

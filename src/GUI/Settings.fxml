@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="Window" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller">
+    <children>
+      <Line endX="23.399993896484375" endY="-39.0" layoutX="316.0" layoutY="400.0" startX="-13.600006103515625" startY="46.0" />
+      <Line endX="-162.0" endY="128.8000030517578" layoutX="162.0" layoutY="108.0" startX="-115.0999984741211" startY="78.50001525878906" />
+      <Line endX="238.492919921875" endY="61.292877197265625" layoutX="348.0" layoutY="387.0" startX="191.492919921875" startY="-26.0" />
+      <Line endX="152.0928955078125" endY="-59.399993896484375" layoutX="184.0" layoutY="72.0" startX="143.49288940429688" startY="-73.0" />
+      <Line endX="-125.10000610351562" endY="113.00001525878906" layoutX="172.0" layoutY="74.0" startX="-172.0" startY="49.89289093017578" />
+      <Line endX="121.78582763671875" endY="0.29290771484375" layoutX="417.0" layoutY="360.0" startX="-76.89288330078125" startY="0.29290771484375" />
+      <Line endX="103.58583068847656" endY="91.29287719726562" layoutX="139.0" layoutY="96.0" startX="-92.39288330078125" startY="89.79292297363281" />
+      <Line endX="-7.39288330078125" endY="19.79290771484375" layoutX="347.0" layoutY="341.0" startX="-103.70707702636719" startY="-153.0" />
+      <Line endX="111.49285888671875" endY="30.89288330078125" layoutX="427.0" layoutY="329.0" startX="210.99993896484375" startY="-142.0" />
+      <Line endX="19.292922973632812" endY="107.99996948242188" layoutX="224.0" layoutY="80.0" startX="114.20001220703125" startY="-66.29289245605469" />
+      <Line endX="120.0928955078125" endY="-34.000003814697266" layoutX="428.0" layoutY="33.0" startX="111.29290771484375" startY="-21.107105255126953" />
+      <Line endX="473.39990234375" endY="-150.70709228515625" layoutX="175.0" layoutY="337.0" startX="463.70703125" startY="-150.70709228515625" />
+      <Pane fx:id="loadScreen" layoutX="119.0" layoutY="178.0" prefHeight="66.0" prefWidth="398.0" style="-fx-background-color: WHITE; -fx-border-color: BLACK;" visible="false">
+         <children>
+            <Button fx:id="selectLoad" layoutX="263.0" layoutY="28.0" mnemonicParsing="false" onMouseClicked="#onSelectLoadButtonClicked" text="Load" />
+            <Button fx:id="returnLoad" layoutX="334.0" layoutY="28.0" mnemonicParsing="false" onMouseClicked="#returnLoadOnClicked" text="Return" />
+            <ChoiceBox fx:id="loadChoiceBox" layoutX="39.0" layoutY="30.0" prefHeight="25.0" prefWidth="175.0" />
+            <Text layoutX="40.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a game to load:" />
+         </children>
+      </Pane>
+      <Pane fx:id="saveScreen" layoutX="129.0" layoutY="188.0" prefHeight="66.0" prefWidth="398.0" style="-fx-background-color: WHITE; -fx-border-color: BLACK;" visible="false">
+         <children>
+            <ChoiceBox fx:id="saveChoiceBox" layoutX="39.0" layoutY="30.0" prefHeight="25.0" prefWidth="175.0" />
+            <Text layoutX="40.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a slot to save:" />
+         </children>
+      </Pane>
+      <Polygon fx:id="poly" fill="#b0b5b9" layoutX="295.0" layoutY="178.0" points="344.41424560546875, 9.000015258789062, 244.28582763671875, 182.79290771484375, 45.314208984375, 183.5, -51.70707702636719, 9.999969482421875, 42.19287109375, -164.50001525878906, 243.5858154296875, -165.39999389648438" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="polyColor" fill="RED" layoutX="85.0" layoutY="245.0" points="255.0928955078125, 116.5, 215.0928955078125, 205.20001220703125, -85.0, 205.20001220703125, -85.70711517333984, -7.492889404296875, -39.100006103515625, -59.91419982910156, 158.2929229736328, -57.95001220703125" stroke="BLACK" strokeType="INSIDE" />
+          <CheckBox fx:id="hardCheckBox" layoutX="371.0" layoutY="195.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="138.0" text="Hard Difficulty">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </CheckBox>
+          <CheckBox fx:id="computerFirstCheckBox" layoutX="371.0" layoutY="123.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="138.0" text="Computer first">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </CheckBox>
+          <RadioButton fx:id="Red" layoutX="160.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#onRedRadioButtonClicked" selected="true" text="Red" textFill="RED">
+         <toggleGroup>
+                  <ToggleGroup fx:id="color" />
+         </toggleGroup>
+         <font>
+            <Font size="15.0" />
+         </font>
+          </RadioButton>
+          <RadioButton fx:id="Blue" layoutX="69.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#onBlueRadioButtonClicked" text="Blue" textFill="BLUE" toggleGroup="$color">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </RadioButton>
+          <Label layoutX="57.0" layoutY="37.0" prefHeight="18.0" prefWidth="151.0" text="Playing as:">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+          <Button fx:id="Return" layoutX="115.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#onReturnButtonClicked" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: grey; -fx-border-color: #4e4d4d;" text="Return" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+          <Button fx:id="playButton" layoutX="69.0" layoutY="254.0" mnemonicParsing="false" onMouseClicked="#onPlayButtonClicked" prefHeight="26.0" prefWidth="151.0" style="-fx-background-color: grey; -fx-border-color: #4e4d4d;" text="Start" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label layoutX="365.0" layoutY="57.0" prefHeight="18.0" prefWidth="151.0" text="Difficulty:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+
+    </children>
+</AnchorPane>
