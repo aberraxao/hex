@@ -3,14 +3,13 @@ package Utils
 
 import Utils.BoardUtils.generateEmptyBoard
 import Utils.HexBoard.Board
-import Utils.{MyRandom, RandomWithState}
 
-import java.io.*
+import java.io.{File, PrintWriter}
 import java.time.LocalDateTime
 import scala.annotation.tailrec
 import scala.collection.immutable.SortedMap
 import scala.io.Source
-import scala.util.*
+import scala.util.{Failure, Success, Try}
 
 object IO_Utils {
 
@@ -58,7 +57,7 @@ object IO_Utils {
       case Success(i) => i match {
         case 0 => sys.exit
         case 1 => printInstructions(); showPrompt(options, random)
-        case 2 => (new GameState(startNewGame(), List[HexBoard]() ,random), computerFirst())
+        case 2 => (new GameState(startNewGame(), List[HexBoard](), random), computerFirst())
         case 3 => doLoad(options, random)
         case _ => println("Invalid number!"); showPrompt(options, random)
       }
@@ -228,7 +227,7 @@ object IO_Utils {
     printSaveOption(lines)
     println(limitSave + " - Exit saves")
     val save = chooseSave(lines, true)
-    if(save != null){
+    if (save != null) {
       rewriteSaveInfo(save, gameState)
       writeToFile(gameState.hexBoard, gameState.random, "save" + save.split(" - ")(0) + ".txt")
       println("File saved successfully")
@@ -248,24 +247,24 @@ object IO_Utils {
       case Success(input) => input match {
 
         case i if i < limitSave =>
-          if (lst(i).split(" - ")(1) == "Empty") {    // caso input dado seja em empty
-            if(save)
-              return lst(i)                                // se for save devolve a linha indicada
-            println("Save is empty, try another one.")     // se for load, nao permite
+          if (lst(i).split(" - ")(1) == "Empty") { // caso input dado seja em empty
+            if (save)
+              return lst(i) // se for save devolve a linha indicada
+            println("Save is empty, try another one.") // se for load, nao permite
             chooseSave(lst, save)
           }
-          else {                                            // se nao for empty
-            if(save) {                                      // se for save valida se quer salvar por cima
+          else { // se nao for empty
+            if (save) { // se for save valida se quer salvar por cima
               println("Are you sure you want to override(Y/N)")
-              if(Override())
+              if (Override())
                 lst(i)
               else
                 chooseSave(lst, save)
             }
-            else                                            // caso seja load, devolve linha indicada
+            else // caso seja load, devolve linha indicada
               lst(i)
           }
-        case i if i == limitSave => null                    // caso deseje sair
+        case i if i == limitSave => null // caso deseje sair
         case _ => println("Invalid input, try again!"); chooseSave(lst, save)
       }
       case Failure(_) => println("Invalid input, try again!"); chooseSave(lst, save)
@@ -274,11 +273,11 @@ object IO_Utils {
 
   @tailrec
   private def Override(): Boolean = {
-    Try(scala.io.StdIn.readLine.trim) match{
-      case Success(i) => i match{
-              case "y" | "Y" => true
-              case "n" | "N" => false
-              case _ => println("invalid answer"); Override()
+    Try(scala.io.StdIn.readLine.trim) match {
+      case Success(i) => i match {
+        case "y" | "Y" => true
+        case "n" | "N" => false
+        case _ => println("invalid answer"); Override()
       }
       case Failure(_) => println("invalid answer"); Override()
     }
@@ -292,7 +291,7 @@ object IO_Utils {
   private def rewriteSaveInfo(line: String, gameState: GameState): Unit = {
     val index = line.split(" - ")(0)
     val f = new File("saveInfo.txt")
-    if(!f.exists()) {
+    if (!f.exists()) {
       initSaveInfo()
     }
 
@@ -302,7 +301,7 @@ object IO_Utils {
 
     val pw = new PrintWriter(new File("saveInfo.txt"))
     val alteredLine = line.split(" - ")(0) + " - Board size: " + gameState.hexBoard.size + " " + LocalDateTime.now()
-    fullFile.map(x => if(x.split(" - ")(0) == index) pw.println(alteredLine) else pw.println(x))
+    fullFile.map(x => if (x.split(" - ")(0) == index) pw.println(alteredLine) else pw.println(x))
     pw.close()
   }
 
@@ -314,7 +313,7 @@ object IO_Utils {
     printSaveOption(lines)
     println(limitSave + " - Return")
     val load = chooseSave(lines, false)
-    if(load == null)
+    if (load == null)
       showPrompt(map, random)
     else
       (readFromFile("save" + load.split(" - ")(0) + ".txt"), false)

@@ -1,22 +1,17 @@
 package GUI
 
-import GUI.SaveLoadGUI.{readFromFileGUI, readSaveInfoGUI, rewriteSaveInfoGUI, writeToFileGUI}
-import Utils.BoardUtils.*
-import Utils.{Cells, GameState, HexBoard}
-import Utils.IO_Utils.{readFromFile, readSaveInfo, writeToFile}
+import GUI.SaveLoadGUI.{readFromFileGUI, readSaveInfoGUI}
+import Utils.Cells
 import javafx.application.Platform
-import javafx.event.ActionEvent
 import javafx.fxml.{FXML, FXMLLoader}
-import javafx.scene.control.*
-import javafx.scene.input.MouseEvent
-import javafx.scene.layout.{AnchorPane, FlowPane, GridPane, Pane}
-import javafx.scene.paint.*
-import javafx.scene.shape.*
-import javafx.scene.{Node, Parent}
+import javafx.scene.control.{Button, CheckBox, ChoiceBox, RadioButton}
+import javafx.scene.layout.{AnchorPane, GridPane, Pane}
+import javafx.scene.paint.Color
+import javafx.scene.shape.Polygon
+import javafx.scene.Parent
 
 
 class Controller {
-
 
   @FXML
   private var playButton: Button = _

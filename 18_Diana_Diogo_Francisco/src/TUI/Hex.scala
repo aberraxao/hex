@@ -5,7 +5,7 @@ import Utils.{Cells, GameState, MyRandom}
 
 import scala.annotation.tailrec
 import scala.collection.immutable.SortedMap
-import scala.io.AnsiColor.*
+import scala.io.AnsiColor.{RED, BLUE, MAGENTA, BOLD, RESET}
 
 object Hex extends App {
 
