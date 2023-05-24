@@ -1,4 +1,4 @@
-package HexGame
+package Utils
 
 object Cells extends Enumeration {
   type Cell = Value
